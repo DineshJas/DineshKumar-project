@@ -22,7 +22,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.get("/", function(req, res) {});
 function isHelogedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -33,7 +32,7 @@ function isHelogedIn(req, res, next) {
   });
 }
 //Home Route
-app.get("/home", function(req, res) {
+app.get("/home", isHelogedIn,function(req, res) {
   User.find({}, function(err, users) {
     if (err) {
       return res.send({
